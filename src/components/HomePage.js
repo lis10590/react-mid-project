@@ -6,6 +6,7 @@ import axios from "axios";
 const HomePage = ()=>{
 
     const [users,setUsers] = useState([]);
+    const [query, setQuery] = useState("");
 
 
    const getUsers = async() =>{
@@ -19,16 +20,22 @@ const HomePage = ()=>{
     getUsers();
  },[])
 
+const search = (e)=>{
+    setQuery(e.target.value);
+}
 
+console.log(users.filter(item=>item.name.toLowerCase().includes(query)))
 
    return(
        <div>
         
       <div className="row">
           <div className="column">
-          Search <input type="text"></input> &nbsp; 
+          Search <input type="text" value={query} onChange={search}></input> &nbsp; 
            <button>Add</button>
-          {users.map(user=>{
+          {
+              users.filter(item=>item.name.toLowerCase().includes(query) || item.email.toLowerCase().includes(query) )
+          .map(user=>{
               return <div>
     ID: {users?user.id:null} <br></br>
           Name: <input type="text" value={users? user.name : null}></input> <br></br>
