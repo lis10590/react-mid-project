@@ -6,6 +6,7 @@ import axios from "axios";
 const HomePage = ()=>{
 
     const [users,setUsers] = useState([]);
+    const [todos, setTodos] = useState([]);
     const [query, setQuery] = useState("");
 
 
@@ -15,9 +16,16 @@ const HomePage = ()=>{
     setUsers(usersData);
    }
 
+   const getTodos = async() =>{
+    let resp = await axios.get("https://jsonplaceholder.typicode.com/todos");
+    let todosData = resp.data; 
+    setTodos(todosData);
+   }
+
    
    useEffect(()=>{
     getUsers();
+    getTodos();
  },[])
 
 const search = (e)=>{
