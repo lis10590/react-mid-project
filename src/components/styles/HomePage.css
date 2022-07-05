@@ -1,0 +1,11 @@
+.row {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+
+  .column {
+    
+    padding: 10px;
+   
+  }
