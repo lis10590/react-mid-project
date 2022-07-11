@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import OtherData from "./OtherData";
+import Todos from "./Todos";
 import styles from "./styles/HomePage.css";
 
 import axios from "axios";
@@ -10,15 +11,10 @@ const HomePage = ()=>{
     const [todos, setTodos] = useState([]);
     const [query, setQuery] = useState("");
     const[otherData,setOtherData] = useState([]);
+    const [name, setName] = useState("");
+    const [email,setEmail] = useState("");
+    let tasks=[];
     
-  
-   
- 
- 
-    
-
-
-  
 
 
    const getUsers = async() =>{
@@ -61,6 +57,21 @@ const HandleOnClick = (position) =>{
     setOtherData(updatedClickStage)
 }
 
+const onNameChangeHandler = (e) =>{
+    setName(e.target.value);
+}
+
+const onEmailChangeHandler = (e)=>{
+    setEmail(e.target.value);
+}
+
+const onIdClickHandler = (id) =>{
+    tasks = todos.filter(task=> task.userId === id);
+    console.log(tasks)
+    return tasks;
+}
+
+
 
 
 
@@ -76,9 +87,9 @@ const HandleOnClick = (position) =>{
               users.filter(item=>item.name.toLowerCase().includes(query) || item.email.toLowerCase().includes(query) )
           .map(user=>{
               return <div key={user.id}>
-    ID: {users?user.id:null} <br></br>
-          Name: <input type="text" value={users? user.name : null} readOnly></input> <br></br>
-          Email: <input type="text" value={users? user.email : null} readOnly></input> <br></br>
+   <label onClick={()=>{onIdClickHandler(user.id)}}> ID:</label> {users?user.id:null} <br></br>
+          Name: <input type="text" placeholder={users? user.name : null} value={name} onChange={onNameChangeHandler} ></input> <br></br>
+          Email: <input type="text" value={ email} placeholder={users? user.email : null} onChange={onEmailChangeHandler}></input> <br></br>
           <button onClick={()=>{HandleOnClick(user.id)}} >Other Data</button>&nbsp; <br></br>
          {otherData[user.id] && <OtherData details={user}/>}
           <button>Update</button>
@@ -87,7 +98,7 @@ const HandleOnClick = (position) =>{
           })}
           </div>
           <div className="column">
-<h1>Column 2</h1>
+          <Todos tasks={tasks} />
           </div>
 
       </div>

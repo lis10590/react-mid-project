@@ -2,6 +2,7 @@
 
 const OtherData = (props) =>{
 
+
     return (
         <div>
             Street: <input type="text" value={props.details.address.street} readOnly></input> <br></br>
