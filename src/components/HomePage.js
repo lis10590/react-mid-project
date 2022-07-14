@@ -2,18 +2,24 @@ import { useEffect, useState } from "react";
 import OtherData from "./OtherData";
 import Todos from "./Todos";
 import styles from "./styles/HomePage.css";
-
 import axios from "axios";
+import Posts from "./Posts";
 
 const HomePage = ()=>{
 
     const [users,setUsers] = useState([]);
     const [todos, setTodos] = useState([]);
+    const [posts, setPosts] = useState([]);
     const [query, setQuery] = useState("");
-    const[otherData,setOtherData] = useState([]);
+    const [otherData,setOtherData] = useState([]);
     const [name, setName] = useState("");
     const [email,setEmail] = useState("");
-    let tasks=[];
+    const [tasksList, setTasksList] = useState([]);
+    const [postsList, setPostsList] = useState([]);
+    const [isUpdateClicked,setIsUpdateClicked] = useState(false);
+    const [isPost, setIsPost] = useState(false)
+    
+   
     
 
 
@@ -32,12 +38,19 @@ const HomePage = ()=>{
     setTodos(todosData);
    }
 
+   const getPosts = async() =>{
+    let resp = await axios.get("https://jsonplaceholder.typicode.com/posts");
+    let postsData = resp.data; 
+    setPosts(postsData);
+   }
+
 
 
    
    useEffect(()=>{
     getUsers();
     getTodos();
+    getPosts();
  
     
  },[])
@@ -66,9 +79,14 @@ const onEmailChangeHandler = (e)=>{
 }
 
 const onIdClickHandler = (id) =>{
-    tasks = todos.filter(task=> task.userId === id);
+    const tasks = todos.filter(task=> task.userId === id);
     console.log(tasks)
-    return tasks;
+   setTasksList(tasks);
+   const postsDataList = posts.filter(post=> post.userId === id);
+   console.log(postsList);
+   setPostsList(postsDataList);
+   setIsUpdateClicked(!isUpdateClicked);
+   setIsPost(!isPost);
 }
 
 
@@ -98,7 +116,15 @@ const onIdClickHandler = (id) =>{
           })}
           </div>
           <div className="column">
-          <Todos tasks={tasks} />
+          {isUpdateClicked &&   <Todos tasks={tasksList} />
+           
+          }
+
+          {
+             isPost &&<Posts posts={postsList}/> 
+          }
+        
+  
           </div>
 
       </div>
