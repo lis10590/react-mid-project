@@ -15,7 +15,7 @@ const Todos = (props) =>{
         <div>
         <div>
             <h4>Todos- User {props.tasks ? props.tasks[0].userId: null}</h4>
-            <button >Add</button>
+           
             {
                 props.tasks.map(task=>{
                     return (
@@ -32,12 +32,12 @@ const Todos = (props) =>{
         <div>
          {/* <NewTodo tasks={props.tasks} />  */}
 
-         <h4>New Todo - User {props.tasks[0].userId}</h4>
+         {/* <h4>New Todo - User {props.tasks[0].userId}</h4>
             Title: <input type="text" onChange={titleChangeHandler} value={title} ></input>
             <div>
             <button >Add</button>
             <button>Cancel</button>
-            </div>
+            </div> */}
 
         </div>
         </div>

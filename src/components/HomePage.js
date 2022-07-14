@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import OtherData from "./OtherData";
 import Todos from "./Todos";
+import NewTodo from "./NewTodo";
+import NewPost from "./NewPost";
+import NewUser from "./NewUser";
 import styles from "./styles/HomePage.css";
 import axios from "axios";
 import Posts from "./Posts";
@@ -18,6 +21,9 @@ const HomePage = ()=>{
     const [postsList, setPostsList] = useState([]);
     const [isUpdateClicked,setIsUpdateClicked] = useState(false);
     const [isPost, setIsPost] = useState(false)
+    const [isAddTodoClicked, setIsAddTodoClicked] = useState(false);
+    const [isAddPostClicked, setIsAddPostClicked] = useState(false);
+    const [isAddUserClicked, setIsAddUserClicked] = useState(false);
     
    
     
@@ -89,7 +95,36 @@ const onIdClickHandler = (id) =>{
    setIsPost(!isPost);
 }
 
+const onAddTodoHandler = () =>{
+    setIsAddTodoClicked(true);
+    setIsUpdateClicked(false);
+    setIsPost(false);
+}
 
+const onAddPostHandler = () =>{
+    setIsAddPostClicked(true);
+    setIsUpdateClicked(false);
+    setIsPost(false);
+
+}
+
+const onCancelTodo = () =>{
+    setIsAddTodoClicked(false);
+    setIsUpdateClicked(true);
+    setIsPost(true);
+
+}
+
+const onCancelPost = () =>{
+    setIsAddPostClicked(false);
+    setIsUpdateClicked(true);
+    setIsPost(true);
+
+}
+
+const onAddUserHandler = () =>{
+    setIsAddUserClicked(true);
+}
 
 
 
@@ -100,7 +135,7 @@ const onIdClickHandler = (id) =>{
       <div className="row">
           <div className="column">
           Search <input type="text" value={query} onChange={search}></input> &nbsp; 
-           <button>Add</button>
+           <button onClick={onAddUserHandler}>Add</button>
           {
               users.filter(item=>item.name.toLowerCase().includes(query) || item.email.toLowerCase().includes(query) )
           .map(user=>{
@@ -116,12 +151,33 @@ const onIdClickHandler = (id) =>{
           })}
           </div>
           <div className="column">
-          {isUpdateClicked &&   <Todos tasks={tasksList} />
+          {isUpdateClicked &&  
+          <div>
+            <button onClick={onAddTodoHandler}>Add</button>
+            <Todos tasks={tasksList} />
+          </div>
            
           }
 
           {
-             isPost &&<Posts posts={postsList}/> 
+            isAddTodoClicked && <NewTodo tasks={tasksList} cancel={onCancelTodo}/>
+          }
+
+          {
+             isPost &&
+             <div>
+                <button onClick={onAddPostHandler}>Add</button>
+                 <Posts posts={postsList} /> 
+             </div>
+            
+          }
+
+          {
+            isAddPostClicked && <NewPost cancel={onCancelPost}/>
+          }
+
+          {
+            isAddUserClicked && <NewUser />
           }
         
   

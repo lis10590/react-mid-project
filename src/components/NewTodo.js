@@ -15,7 +15,7 @@ const NewTodo = (props) =>{
     const addTodoHandler = () =>{
         const todos = {
             userId: props.tasks[0].userId,
-            title,
+            title: title,
             completed: false
         }
         
@@ -36,7 +36,7 @@ const NewTodo = (props) =>{
             Title: <input type="text" onChange={titleChangeHandler} value={title} ></input>
             <div>
             <button onClick={addTodoHandler}>Add</button>
-            <button>Cancel</button>
+            <button onClick={props.cancel}>Cancel</button>
             </div>
             
         </div>
