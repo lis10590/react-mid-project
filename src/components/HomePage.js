@@ -24,6 +24,7 @@ const HomePage = ()=>{
     const [isAddTodoClicked, setIsAddTodoClicked] = useState(false);
     const [isAddPostClicked, setIsAddPostClicked] = useState(false);
     const [isAddUserClicked, setIsAddUserClicked] = useState(false);
+    const [todosUpdate, setTodosUpdate] = useState([todos]);
     
    
     
@@ -126,6 +127,12 @@ const onAddUserHandler = () =>{
     setIsAddUserClicked(true);
 }
 
+const updateTodos = (title) =>{
+    const todos = {
+        
+    }
+}
+
 
 
 
@@ -160,7 +167,7 @@ const onAddUserHandler = () =>{
           }
 
           {
-            isAddTodoClicked && <NewTodo tasks={tasksList} cancel={onCancelTodo}/>
+            isAddTodoClicked && <NewTodo tasks={tasksList} cancel={onCancelTodo} update={updateTodos}/>
           }
 
           {
