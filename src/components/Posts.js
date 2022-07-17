@@ -1,4 +1,4 @@
-
+import styles from "../components/styles/Posts.css"
 const Posts = (props)=>{
     return (
         <div>
@@ -7,7 +7,7 @@ const Posts = (props)=>{
         {
             props.posts.map(post=>{
                 return (
-                    <div key={post.id}>
+                    <div className="posts" key={post.id}>
         <p> Title: {post.title}</p>
         <p>Body:{post.body}</p>
                     </div>

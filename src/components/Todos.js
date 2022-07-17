@@ -1,29 +1,23 @@
+import styles from "../components/styles/Todos.css"
+
+
 const Todos = (props) => {
   return (
-    <div>
-      <div>
+    
+      <div >
         <h4>Todos- User {props.tasks ? props.tasks[0].userId : null}</h4>
 
         {props.tasks.map((task) => {
           return (
-            <div key={task.id}>
+            <div className="todos" key={task.id}>
               <p> Title: {task.title}</p>
               <p>Completed:{task.completed ? "True" : "False"}</p>
             </div>
           );
         })}
       </div>
-      <div>
-        {/* <NewTodo tasks={props.tasks} />  */}
-
-        {/* <h4>New Todo - User {props.tasks[0].userId}</h4>
-            Title: <input type="text" onChange={titleChangeHandler} value={title} ></input>
-            <div>
-            <button >Add</button>
-            <button>Cancel</button>
-            </div> */}
-      </div>
-    </div>
+    
+    
   );
 };
 

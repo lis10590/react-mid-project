@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../components/styles/NewUser.css"
 
 const NewUser = (props) => {
   const [name, setName] = useState("");
@@ -15,7 +16,7 @@ const NewUser = (props) => {
   };
 
   return (
-    <div>
+    <div className="new-user">
       <h4>Add New User</h4>
       Name:
       <input
@@ -31,8 +32,12 @@ const NewUser = (props) => {
         value={email}
       ></input>
       <br></br>
-      <button onClick={onAddUserHandler}>Add</button>
-      <button onClick={props.cancel}>Cancel</button>
+      <div className="new-user-btns">
+      <button className="new-user-btn" onClick={props.cancel}>Cancel</button>
+      <button className="new-user-btn" onClick={onAddUserHandler}>Add</button>
+      
+      </div>
+     
     </div>
   );
 };

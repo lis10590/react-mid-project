@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../components/styles/NewTodo.css"
 
 const NewTodo = (props) => {
   const [title, setTitle] = useState("");
@@ -19,13 +20,14 @@ const NewTodo = (props) => {
   };
 
   return (
-    <div>
+    <div className="new-todo">
       <h4>New Todo - User {props.tasks[0].userId}</h4>
       Title:{" "}
       <input type="text" onChange={titleChangeHandler} value={title}></input>
-      <div>
-        <button onClick={onAddTodoHandler}>Add</button>
-        <button onClick={props.cancel}>Cancel</button>
+      <div className="new-todo-btns">
+       <button className="new-todo-btn" onClick={props.cancel}>Cancel</button>
+        <button className="new-todo-btn" onClick={onAddTodoHandler}>Add</button>
+        
       </div>
     </div>
   );

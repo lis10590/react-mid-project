@@ -1,0 +1,15 @@
+.new-todo-btn {
+    background-color: #FFE4B5;
+    margin: 5px;
+}
+
+.new-todo {
+    border-style: solid ;
+    border-width: 2px;
+    padding: 5px;
+}
+
+.new-todo-btns {
+    display: flex;
+    justify-content: flex-end;
+}

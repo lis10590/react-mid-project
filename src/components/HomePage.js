@@ -142,9 +142,11 @@ const HomePage = () => {
     <div>
       <div className="row">
         <div className="column">
+          <div className="search">
           Search <input type="text" value={query} onChange={search}></input>{" "}
-          &nbsp;
-          <button onClick={onAddUserHandler}>Add</button>
+          
+          <button  className="add-user-btn" onClick={onAddUserHandler}>Add</button>
+          </div>
           {users
             .filter(
               (item) =>
@@ -153,7 +155,7 @@ const HomePage = () => {
             )
             .map((user) => {
               return (
-                <div key={user.id}>
+                <div className="user" key={user.id}>
                   <label
                     onClick={() => {
                       onIdClickHandler(user.id);
@@ -188,8 +190,10 @@ const HomePage = () => {
                   </button>
                   &nbsp; <br></br>
                   {otherData[user.id] && <OtherData details={user} />}
-                  <button>Update</button>
-                  <button>Delete</button>
+                  <div className="update-delete-btns">
+                  <button className="user-update-btn">Update</button>
+                  <button className="user-delete-btn">Delete</button>
+                  </div>
                 </div>
               );
             })}
@@ -197,7 +201,7 @@ const HomePage = () => {
         <div className="column">
           {isUpdateClicked && (
             <div>
-              <button onClick={onAddTodoHandler}>Add</button>
+              <button className="add-btn" onClick={onAddTodoHandler}>Add</button>
               <Todos tasks={tasksList} />
             </div>
           )}
@@ -213,7 +217,7 @@ const HomePage = () => {
 
           {isPost && (
             <div>
-              <button onClick={onAddPostHandler}>Add</button>
+              <button className="add-btn" onClick={onAddPostHandler}>Add</button>
               <Posts posts={postsList} />
             </div>
           )}

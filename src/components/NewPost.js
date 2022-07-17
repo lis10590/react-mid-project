@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../components/styles/NewPost.css"
 
 const NewPost = (props) => {
   const [title, setTitle] = useState("");
@@ -15,7 +16,7 @@ const NewPost = (props) => {
     props.update(post);
   };
   return (
-    <div>
+    <div className="new-post">
       <h4>New Post - User {props.posts[0].userId} </h4>
       Title:{" "}
       <input
@@ -30,9 +31,10 @@ const NewPost = (props) => {
         onChange={(e) => setBody(e.target.value)}
         value={body}
       ></input>
-      <div>
-        <button onClick={onAddPostHandler}>Add</button>
-        <button onClick={props.cancel}>Cancel</button>
+      <div className="new-post-btns">
+      <button className="new-post-btn" onClick={props.cancel}>Cancel</button>
+      <button className="new-post-btn" onClick={onAddPostHandler}>Add</button>
+        
       </div>
     </div>
   );

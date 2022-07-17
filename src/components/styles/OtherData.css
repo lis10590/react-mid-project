@@ -1,0 +1,11 @@
+.other-data{
+    border-style:solid ;
+    border-width: 1px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #FAF0E6
+}
+
+.other-data-input {
+    background-color: #FAF0E6
+}
