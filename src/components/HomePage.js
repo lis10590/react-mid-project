@@ -14,8 +14,8 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState("");
   const [otherData, setOtherData] = useState([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState({});
+  const [email, setEmail] = useState({});
   const [tasksList, setTasksList] = useState([]);
   const [postsList, setPostsList] = useState([]);
   const [isUpdateClicked, setIsUpdateClicked] = useState(false);
@@ -63,12 +63,12 @@ const HomePage = () => {
     setOtherData(updatedClickStage);
   };
 
-  const onNameChangeHandler = (e) => {
-    setName(e.target.value);
+  const onNameChangeHandler = (e, index) => {
+    setName({ ...name, [`input-${index}`]: e.target.value });
   };
 
-  const onEmailChangeHandler = (e) => {
-    setEmail(e.target.value);
+  const onEmailChangeHandler = (e, index) => {
+    setEmail({ ...email, [`input-${index}`]: e.target.value });
   };
 
   const onIdClickHandler = (id) => {
@@ -130,22 +130,43 @@ const HomePage = () => {
     console.log(posts);
   };
 
-  const updateUsers = (user) => {
+  const addUser = (user) => {
     console.log(user);
-    const usersData = users;
+    const usersData = [...users];
     usersData.push(user);
     setUsers(usersData);
-    console.log(users);
+    console.log(usersData);
+    // setUsers({ ...users, user });
   };
+
+  const updateUser = (userId) => {
+    const oldUser = users.filter((user) => user.id === userId);
+    console.log(oldUser[0]);
+    const oldEmail = oldUser[0].email;
+    const oldName = oldUser[0].name;
+    console.log(oldEmail, oldName);
+    const newUser = {
+      ...oldUser[0],
+      email: email === {} ? email : oldEmail,
+      name: name === {} ? name : oldName,
+    };
+    const usersArr = [...users];
+    usersArr.splice(userId - 1, 1, newUser);
+    console.log(usersArr);
+    setUsers(usersArr);
+  };
+
+  console.log(email, name);
 
   return (
     <div>
       <div className="row">
         <div className="column">
           <div className="search">
-          Search <input type="text" value={query} onChange={search}></input>{" "}
-          
-          <button  className="add-user-btn" onClick={onAddUserHandler}>Add</button>
+            Search <input type="text" value={query} onChange={search}></input>{" "}
+            <button className="add-user-btn" onClick={onAddUserHandler}>
+              Add
+            </button>
           </div>
           {users
             .filter(
@@ -153,7 +174,7 @@ const HomePage = () => {
                 item.name.toLowerCase().includes(query) ||
                 item.email.toLowerCase().includes(query)
             )
-            .map((user) => {
+            .map((user, index) => {
               return (
                 <div className="user" key={user.id}>
                   <label
@@ -169,16 +190,16 @@ const HomePage = () => {
                   <input
                     type="text"
                     placeholder={users ? user.name : null}
-                    value={name}
-                    onChange={onNameChangeHandler}
+                    value={name[`input-${index}` || 0]}
+                    onChange={(e) => onNameChangeHandler(e, index)}
                   ></input>{" "}
                   <br></br>
                   Email:{" "}
                   <input
                     type="text"
-                    value={email}
+                    value={email[`input-${index}` || 0]}
                     placeholder={users ? user.email : null}
-                    onChange={onEmailChangeHandler}
+                    onChange={(e) => onEmailChangeHandler(e, index)}
                   ></input>{" "}
                   <br></br>
                   <button
@@ -191,8 +212,13 @@ const HomePage = () => {
                   &nbsp; <br></br>
                   {otherData[user.id] && <OtherData details={user} />}
                   <div className="update-delete-btns">
-                  <button className="user-update-btn">Update</button>
-                  <button className="user-delete-btn">Delete</button>
+                    <button
+                      className="user-update-btn"
+                      onClick={() => updateUser(user.id)}
+                    >
+                      Update
+                    </button>
+                    <button className="user-delete-btn">Delete</button>
                   </div>
                 </div>
               );
@@ -201,7 +227,9 @@ const HomePage = () => {
         <div className="column">
           {isUpdateClicked && (
             <div>
-              <button className="add-btn" onClick={onAddTodoHandler}>Add</button>
+              <button className="add-btn" onClick={onAddTodoHandler}>
+                Add
+              </button>
               <Todos tasks={tasksList} />
             </div>
           )}
@@ -217,7 +245,9 @@ const HomePage = () => {
 
           {isPost && (
             <div>
-              <button className="add-btn" onClick={onAddPostHandler}>Add</button>
+              <button className="add-btn" onClick={onAddPostHandler}>
+                Add
+              </button>
               <Posts posts={postsList} />
             </div>
           )}
@@ -232,7 +262,7 @@ const HomePage = () => {
           )}
 
           {isAddUserClicked && (
-            <NewUser users={users} cancel={onCancelUser} update={updateUsers} />
+            <NewUser users={users} cancel={onCancelUser} update={addUser} />
           )}
         </div>
       </div>
